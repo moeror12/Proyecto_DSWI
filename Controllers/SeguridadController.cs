@@ -17,6 +17,18 @@ namespace Proyecto_DSWI.Controllers
             Usuario u = new Usuario();
             return View(u);
         }
+        //[HttpPost]
+        //public ActionResult Login(Usuario usuario)
+        //{
+        //    Usuario uSession = dao.Login(usuario);
+        //    if (uSession == null && !usuario.NombreUsuario.Equals(uSession.NombreUsuario, StringComparison.Ordinal))
+        //    {
+        //        ViewBag.ErrorLogin = "El usuario o contraseña son incorrectos";
+        //        return View(usuario);
+        //    }
+        //    Session["usuario"] = uSession;
+        //    return RedirectToAction("Index", "Producto");
+        //}
         [HttpPost]
         public ActionResult Login(Usuario usuario)
         {
@@ -26,8 +38,26 @@ namespace Proyecto_DSWI.Controllers
                 ViewBag.ErrorLogin = "El usuario o contraseña son incorrectos";
                 return View(usuario);
             }
-            Session["usuario"] = uSession;
-            return RedirectToAction("Index", "Producto");
+            else
+            {
+
+                if (usuario.NombreUsuario != uSession.NombreUsuario)
+                {
+                    ViewBag.ErrorLogin = "El nombre de usuario es incorrecto";
+                    return View(usuario);
+                }
+
+                else if (usuario.Password != uSession.Password)
+                {
+                    ViewBag.ErrorLogin = "La contraseña es incorrecta";
+                    return View(usuario);
+                }
+                else
+                {
+                    Session["usuario"] = uSession;
+                    return RedirectToAction("Index", "Producto");
+                }
+            }
         }
         [HttpGet]
         public ActionResult CerrarSession()
