@@ -1,0 +1,95 @@
+﻿@using Proyecto_DSWI.Models;
+@model IEnumerable<Proyecto_DSWI.Models.Producto>
+
+@{
+    ViewBag.Title = "ListadoCrud";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="background-color: white; margin-top:40px; padding:20px; border-radius: 20px">
+
+    <h2 class="mt-5">Listado</h2>
+
+    @{
+        Usuario u = (Usuario)Session["usuario"];
+        if (u == null)
+        {
+            Response.Redirect("~/");
+        }
+        else
+        {
+            if (u.TipoUsuarioId != 1)
+            {
+                Response.SetStatus(403);
+            }
+            else
+            {
+                <p>
+                    @Html.ActionLink("Crear", "Create", null, new { @class = "btn btn-success" })
+                </p>
+
+                if (ViewData["mensaje"] != null)
+                {
+                    <div class="col-md-offset-2 col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+                        @ViewData["mensaje"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        </button>
+                    </div>
+                }
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nombre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Precio)
+                        </th>
+                        <th>
+                            Fecha de Creacion
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Foto)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Categoria)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Stock)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </td>
+                            <td>
+                                S/.@(Math.Round(item.Precio,2))
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FechaCreacion)
+                            </td>
+                            <td>
+                                <img src="~/fotos/@item.Foto" class="img-fluid" style="width:64px; height:64px" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Categoria)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Stock)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { productoId = item.ProductoId }, new { @class = "btn btn-warning" })
+                                @Html.ActionLink("Detalles", "Details", new { productoId = item.ProductoId }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Eliminar", "Delete", new { productoId = item.ProductoId }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        }
+    }
+
+</div>

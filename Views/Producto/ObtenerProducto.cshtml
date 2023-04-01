@@ -1,0 +1,79 @@
+﻿@using Proyecto_DSWI.Models
+@model Proyecto_DSWI.Models.Producto
+
+@{
+    ViewBag.Title = "ObtenerProducto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="background-color: white; margin-top:40px; padding:20px; border-radius: 20px">
+
+    @{
+        Usuario u = (Usuario)Session["usuario"];
+        if (u == null)
+        {
+            Response.Redirect("~/");
+        }
+        else
+        {
+            <div class="mt-5">
+                <h2>Producto</h2>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Nombre)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Precio)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Precio)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FechaCreacion)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.FechaCreacion)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Foto)
+                    </dt>
+
+                    <dd>
+                        <img src="~/fotos/@Model.Foto" class="img-fluid" style="width:300px; height:300px">
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Categoria)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Categoria)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Stock)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Stock)
+                    </dd>
+
+                </dl>
+            </div>
+            <p>
+                @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-primary" })
+            </p>
+        }
+    }
+
+</div>

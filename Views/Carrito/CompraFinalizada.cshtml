@@ -1,0 +1,32 @@
+﻿@using Proyecto_DSWI.Models
+@{
+    ViewBag.Title = "CompraFinalizada";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    Usuario u = (Usuario)Session["usuario"];
+    if (u == null)
+    {
+        Response.Redirect("~/");
+    }
+    else
+    {
+        <h1 class="text-center mt-5 fw-bolder">COMPRA FINALIZADA</h1>
+        if (ViewBag.Total == null || ViewBag.Total == 0)
+        {
+            Response.Redirect("~/Producto/Index");
+        }
+        else
+        {
+            <div class="container mt-5">
+                <h3 class="text-center">GRACIAS POR SU COMPRA, VUELVA PRONTO</h3>
+                <h4 class="text-center">MONTO TOTAL PAGADO : S/. @Math.Round(ViewBag.Total, 2)</h4>
+            </div>
+        }
+        <br />
+        <center>
+            @Html.ActionLink("Seguir comprando", "Index", "Producto", null, new {@class="btn btn-primary", @style= "border-radius:10px" })
+        </center>
+    }
+}

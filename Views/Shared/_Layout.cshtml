@@ -1,0 +1,58 @@
+﻿@using Proyecto_DSWI.Models;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/ESTILOS.css" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height:50px">        
+        <a class="navbar-brand ms-5" href="@Url.Action("Index","Producto")">INICIO</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Collection of nav links, forms, and other content for toggling -->
+        <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+            <div class="navbar-nav">
+                @{
+                    Usuario u = (Usuario)Session["usuario"];
+                    if (u != null)
+                    {
+                        if (u.TipoUsuarioId == 1)
+                        {
+                            <a class="nav-item nav-link" href="@Url.Action("ListadoCrud","Producto")">
+                                <h5 class="mt-3">CRUD Producto</h5>
+                            </a>
+                        }
+                    }
+                }
+                <a class="nav-item nav-link" href="@Url.Action("Index","Producto")">
+                    <h5 class="mt-3">Productos</h5>
+                </a>
+
+                <a href="@Url.Action("ListarCarrito","Carrito")" class="nav-item nav-link">
+                    <h5 class="mt-3">Carrito</h5>
+                </a>
+                <a href="@Url.Action("CerrarSession","Seguridad")" class="nav-item nav-link">
+                    <h5 class="mt-3">Cerrar Sesion</h5>
+                </a>
+            </div>            
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>    
+    @RenderSection("scripts", required: false)
+</body>
+</html>

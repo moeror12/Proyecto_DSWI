@@ -1,0 +1,44 @@
+﻿@model Proyecto_DSWI.Models.Usuario
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/css/style.css" rel="stylesheet" />
+    
+    
+</head>
+<body>
+    <div class="center">
+        @using (Html.BeginForm("Login", "Seguridad", FormMethod.Post))
+        {
+            <img src="~/fotos/logo.jpg" style="width: 250px; margin: 20px 0 0 30px" />
+            <h1>LOGIN</h1>
+            <div class="txt_field">
+                @Html.TextBoxFor(m => m.NombreUsuario, new { @class = "form-control", @required = string.Empty })
+                <label>Usuario</label>
+            </div>
+            <div class="txt_field">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @required = string.Empty })
+                <label>Contraseña</label>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Iniciar Sesion</button>
+            </div>
+        }
+        @if (ViewBag.ErrorLogin != null)
+        {
+            <div style="background-color:red; color: white; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                <center>
+                    <p style=" padding-top: 10px; padding-bottom: 10px;">@ViewBag.ErrorLogin</p>
+                </center>
+            </div>
+        }
+    </div>
+</body>
+</html>

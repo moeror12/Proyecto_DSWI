@@ -1,0 +1,175 @@
+﻿@using Proyecto_DSWI.Models
+@model IEnumerable<Proyecto_DSWI.Models.CarritoItems>
+
+@{
+    ViewBag.Title = "ListarCarrito";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 0;
+}
+
+@{
+    Usuario u = (Usuario)Session["usuario"];
+    if (u == null)
+    {
+        Response.Redirect("~/");
+    }
+    else
+    {
+        if (ViewBag.mensaje != null)
+        {
+            <div class="col-md-offset-2 col-md-12 alert alert-danger alert-dismissible fade show">
+                @ViewBag.mensaje
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                </button>
+            </div>
+        }
+        <h1 class="text-center mt-5 fw-bolder">CARRITO</h1>
+        <div class="panel">
+            <div class="container mt-5">
+                <div class="card mt-5">
+                    <div class="row">
+                        <div class="col-md-8 cart">
+                            <div class="title">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4><b>DETALLE DEL CARRITO</b></h4>
+                                    </div>
+                                    <div class="col align-self-center text-right text-muted" style="text-align:right; font-weight:bold;">@ViewBag.items</div>
+                                </div>
+                                <div class="row mt-5  border-bottom align-items-center">
+                                    <div class="col" style="text-align:center">
+                                        CODIGO
+                                    </div>
+                                    <div class="col">NOMBRE</div>
+
+                                    <div class="col">
+                                        CATEGORIA
+                                    </div>
+                                    <div class="col">PRECIO</div>
+                                    <div class="col">
+                                        CANTIDAD
+                                    </div>
+                                    <div class="col">SUBTOTAL</div>
+                                    <div class="col">IMAGEN</div>
+                                    <div class="col"></div>
+                                </div>
+                            </div>
+                            <div id="#cont">
+                                @*@c*@
+                                @foreach (var item in Model)
+                                {
+                                    <div class="row border-top border-bottom">
+                                        <div class="row main align-items-center">
+                                            <div class="col" style="text-align:center">
+                                                @item.Producto.ProductoId
+                                            </div>
+
+                                            <div class="col">
+                                                <div class="row text-muted">@item.Producto.Nombre</div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row text-muted">@item.Producto.Categoria</div>
+                                            </div>
+                                            <div class="col">S/. @Math.Round(item.Producto.Precio, 2)</div>
+                                            <div class="col">
+                                                <input type="text" class="form-control text-center" value="@item.Cantidad" id="iCantidad_@i" onblur="ActualizarProducto(this.id)">
+                                                <input type="hidden" value="@item.Producto.ProductoId" class="CodProducto" />
+                                            </div>
+                                            <div class="col">S/.@Math.Round((item.Producto.Precio * item.Cantidad), 2)</div>
+
+                                            <div class="col">
+                                                <img class="img-fluid" style="width:64px; height:64px" src="~/fotos/@item.Producto.Foto">
+                                            </div>
+                                            <div class="col"><button type="button" class="btn btn-danger" id="btnEliminar_@i" onclick="EliminarProducto(this.id)" style="border-radius: 10px"><img src="~/Content/trash-solid-48.png" style="width:15px" /></button></div>
+                                        </div>
+                                    </div>
+                                    i++;
+                                }
+                            </div>
+                            <div class="back-to-shop"><a href="@Url.Action("Index","Producto")" class="btn btn-primary text-white" style="border-radius: 10px">Seguir Comprando</a></div>
+                        </div>
+                        <div class="col-md-4 summary">
+                            <div>
+                                <h5><b>RESUMEN</b></h5>
+                            </div>
+
+                            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                                <div class="col">Subtotal</div>
+                                <div class="col text-right">S/. @Math.Round(ViewBag.Subtotal, 2)</div>
+                            </div>
+                            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                                <div class="col">Iva</div>
+                                <div class="col text-right">S/. @Math.Round(ViewBag.Iva, 2)</div>
+                            </div>
+                            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                                <div class="col">Total</div>
+                                <div class="col text-right">S/. @Math.Round(ViewBag.Total, 2)</div>
+                            </div>
+                            @if (ViewBag.Total <= 0)
+                            {
+                                <button class="btn btn-success disabled" style="width: 100%; margin-top: 4vh; border-radius: 10px">
+                                    PAGAR
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-success" style="width: 100%; margin-top: 4vh; border-radius: 10px"
+                                        onclick="FinalizarCompra();">
+                                    PAGAR
+                                </button>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @section Scripts{
+            <script>
+        function EliminarProducto(id) {
+            if (!confirm("ESTA SEGURO DE ELIMIAR ESTE PRODUCTO DEL CARRITO?")) {
+                return false;
+            }
+            var btn = "#"+id;
+            $.ajax({
+               type:"Post",
+               url:"@Url.Action("Delete", "Carrito")",
+               data:{
+                   id:$(btn).parent().parent().find('.CodProducto').val()
+               },
+               success: function (data) {
+                   location.href = data;
+               }
+            });
+            return true;
+        }
+        function ActualizarProducto(id) {
+            var input = "#"+id;
+            $.ajax({
+               type:"Post",
+               url:"@Url.Action("Actualizar", "Carrito")",
+               data:{
+                   id: $(input).parent().parent().find('.CodProducto').val(),
+                   cantidad:$(input).val()
+               },
+               success: function (data) {
+                   location.href = data;
+               }
+            });
+            return true;
+        }
+        function FinalizarCompra() {
+            $.ajax({
+               type:"Post",
+               url:"@Url.Action("FinalizarCompra", "Carrito")",
+               data: {},
+               success: function (data) {
+                   location.href = data;
+               }
+            });
+            return true;
+        }
+            </script>
+        }
+    }
+}

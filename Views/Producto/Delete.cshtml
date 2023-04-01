@@ -1,0 +1,104 @@
+﻿@using Proyecto_DSWI.Models
+@model Proyecto_DSWI.Models.Producto
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="background-color: white; margin-top:40px; padding:20px; border-radius: 20px">
+
+    <h2 class="mt-5">Eliminar</h2>
+
+    @{
+        Usuario u = (Usuario)Session["usuario"];
+        if (u == null)
+        {
+            Response.Redirect("~/");
+        }
+        else
+        {
+            if (u.TipoUsuarioId != 1)
+            {
+                Response.SetStatus(403);
+            }
+            else
+            {
+                <h3>Estas seguro de hacerlo?</h3>
+                <div>
+                    <h4>Producto</h4>
+                    <hr />
+                    @if (ViewBag.mensaje != null)
+                    {
+                        <div class="col-md-offset-2 col-md-12 alert alert-danger alert-dismissible fade show">
+                            @ViewBag.mensaje
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            </button>
+                        </div>
+                    }
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Nombre)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Nombre)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Precio)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Precio)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.FechaCreacion)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.FechaCreacion)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Foto)
+                        </dt>
+
+                        <dd>
+                            <img src="~/fotos/@Model.Foto" class="img-fluid" style="width:300px; height:300px">
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Categoria)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Categoria)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Stock)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Stock)
+                        </dd>
+
+                    </dl>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Eliminar" class="btn btn-danger" />
+                            @Html.ActionLink("Regresar", "ListadoCrud", null, new { @class = "btn btn-primary" })
+                        </div>
+                    }
+                </div>
+            }
+        }
+    }
+
+</div>
