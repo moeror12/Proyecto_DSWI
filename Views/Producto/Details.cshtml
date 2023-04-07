@@ -27,56 +27,31 @@
                 <div>
                     <h4>Producto</h4>
                     <hr />
-                    <dl class="dl-horizontal">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Nombre)
-                        </dt>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <p class="h3"> @Html.DisplayNameFor(model => model.Nombre)</p>
+                                <small class="text-muted">@Html.DisplayFor(model => model.Nombre)</small>
+                                <p class="h3"> @Html.DisplayNameFor(model => model.Precio)</p>
+                                <small class="text-muted"> @Html.DisplayFor(model => model.Precio)</small>
+                                <p class="h3"> @Html.DisplayNameFor(model => model.FechaCreacion)</p>
+                                <small class="text-muted">
+                                    @Html.DisplayFor(model => model.FechaCreacion)
+                                </small>
+                                <p class="h3"> @Html.DisplayNameFor(model => model.Categoria)</p>
+                                <small class="text-muted">
+                                    @Html.DisplayFor(model => model.Categoria)
+                                </small>
+                                <p class="h3"> @Html.DisplayNameFor(model => model.Stock)</p>
+                                <small class="text-muted"> @Html.DisplayFor(model => model.Categoria)</small>
+                            </div>
+                            <div class="col">
+                                <p class="h3">@Html.DisplayNameFor(model => model.Foto)</p>
+                                <img src="~/fotos/@Model.Foto" class="img-fluid" style="width:300px; height:300px">
+                            </div>
+                        </div>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.Nombre)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Precio)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Precio)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.FechaCreacion)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.FechaCreacion)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Foto)
-                        </dt>
-
-                        <dd>
-                            <img src="~/fotos/@Model.Foto" class="img-fluid" style="width:300px; height:300px">
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Categoria)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Categoria)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Stock)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Stock)
-                        </dd>
-
-                    </dl>
+                    </div>
                 </div>
                 <p>
                     @Html.ActionLink("Editar", "Edit", new { productoId = Model.ProductoId }, new { @class = "btn btn-warning" })
