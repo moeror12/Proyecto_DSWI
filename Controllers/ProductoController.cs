@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -46,6 +47,7 @@ namespace Proyecto_DSWI.Controllers
         [HttpPost]
         public ActionResult Create(Producto p)
         {
+            var regex = new Regex(@"^[A-Z0-9\s]*$");
             ViewBag.categorias = new SelectList(pDao.ListarCategorias(), "CategoriaId", "Nombre");
             HttpPostedFileBase file = Request.Files["Foto"];
             if (file != null)
@@ -57,6 +59,16 @@ namespace Proyecto_DSWI.Controllers
                     file.SaveAs(ruta);
                 }
             }
+            if (!regex.IsMatch(p.Nombre)) 
+            {
+                ViewBag.mensaje = "El nombre del producto tiene que estar en mayúsculas.";
+                return View(p);
+            }
+            //if (!p.Nombre.All(c => char.IsUpper(c)))
+            //{
+            //    ViewBag.mensaje = "El nombre del producto tiene que estar en mayúsculas.";
+            //    return View(p);
+            //}
             if (p.Nombre != null && !string.IsNullOrEmpty(p.Nombre))
             {
                 int res = pDao.RegistrarProducto(p);
@@ -66,7 +78,6 @@ namespace Proyecto_DSWI.Controllers
                     return RedirectToAction("ListadoCrud", "Producto");
                 }
             }
-
             ViewBag.mensaje = "Error al registrar producto";
             return View(p);
         }
