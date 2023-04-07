@@ -100,7 +100,7 @@ namespace Proyecto_DSWI.DAO
             try
             {
                 string sql = $"Insert into Producto (Nombre, Precio, Fechacreacion, Foto, CategoriaId, Stock) values ('{p.Nombre}', {p.Precio}" +
-                    $", '{DateTime.Now.ToString("yyyy-MM-dd")}', '{p.Foto}', {p.CategoriaId}, {p.Stock})";
+                    $", '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', '{p.Foto}', {p.CategoriaId}, {p.Stock})";
                 SqlCommand cmd = new SqlCommand(sql, conexion)
                 {
                     CommandType = CommandType.Text,

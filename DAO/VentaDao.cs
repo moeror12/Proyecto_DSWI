@@ -23,7 +23,7 @@ namespace Proyecto_DSWI.DAO
             try
             {
                 string sql = $"Insert into Venta (DiaVenta, Subtotal, Iva, Total) " +
-                    $"values ('{DateTime.Now.ToString("yyyy-MM-dd")}', {v.Subtotal}, {v.Iva}, {v.Total});" +
+                    $"values ('{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', {v.Subtotal}, {v.Iva}, {v.Total});" +
                     $"Update Producto set Stock = {stock} WHERE Id = {idProducto}";
                 
                 SqlCommand cmd = new SqlCommand(sql, conexion)
