@@ -69,7 +69,8 @@
                                 S/.@(Math.Round(item.Precio,2))
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.FechaCreacion)
+                                @*@Html.DisplayFor(modelItem => item.FechaCreacion)*@
+                                @Convert.ToDateTime(item.FechaCreacion).ToString("dd/MM/yyyy")
                             </td>
                             <td>
                                 <img src="~/fotos/@item.Foto" class="img-fluid" style="width:64px; height:64px" />
