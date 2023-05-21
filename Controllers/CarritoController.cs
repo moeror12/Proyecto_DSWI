@@ -46,16 +46,16 @@ namespace Proyecto_DSWI.Controllers
             {
                 List<CarritoItems> compras = (List<CarritoItems>)Session["carrito"];
                 int index = getIndex(id);
-                if (pDao.ObtenerProducto(id).Stock > cantidad)
-                {
+                //if (pDao.ObtenerProducto(id).Stock > cantidad)
+                //{
                     if (index == -1)
                         compras.Add(new CarritoItems(pDao.ObtenerProducto(id), cantidad));
                     else
                         compras[index].Cantidad += cantidad;
                     Session["carrito"] = compras;
-                }
-                else 
-                TempData["mensaje"] = pDao.ObtenerProducto(id).Nombre + " no tiene suficiente stock";
+            //    }
+            //    else 
+            //    TempData["mensaje"] = pDao.ObtenerProducto(id).Nombre + " no tiene suficiente stock";
             }
             return Content(Url.Action("ListarCarrito").ToString());
         }

@@ -91,6 +91,7 @@ namespace Proyecto_DSWI.Controllers
         [HttpPost]
         public ActionResult Edit(Producto p)
         {
+            var regex = new Regex(@"^[A-Z0-9\s]*$");
             ViewBag.categorias = new SelectList(pDao.ListarCategorias(), "CategoriaId", "Nombre");
             HttpPostedFileBase file = Request.Files["Foto"];
             if (file != null)
@@ -102,6 +103,11 @@ namespace Proyecto_DSWI.Controllers
                     file.SaveAs(ruta);
                 }
             }
+            if (!regex.IsMatch(p.Nombre))
+            {
+                ViewBag.mensaje = "El nombre del producto tiene que estar en mayúsculas.";
+                return View(p);
+            }
             if (p.Nombre != null && !string.IsNullOrEmpty(p.Nombre))
             {
                 int res = pDao.ActualizarProducto(p);
@@ -110,7 +116,7 @@ namespace Proyecto_DSWI.Controllers
                     TempData["mensaje"] = "Producto actualizado correctamente";
                     return RedirectToAction("ListadoCrud", "Producto");
                 }
-            }            
+            }           
             ViewBag.mensaje = "Error al actualizar producto";
             return View(p);
         }

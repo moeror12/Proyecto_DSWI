@@ -52,5 +52,42 @@ namespace Proyecto_DSWI.DAO
             }
             return user;
         }
+        public List<Usuario> ListarUsuario()
+        {
+            List<Usuario> lista = new List<Usuario>();
+            try
+            {
+                string sql = "Select p.UsuarioId, p.NombreUsuario, p.NombreCompleto, p.Password, p.TipoUsuarioId from Usuario";
+
+                SqlCommand cmd = new SqlCommand(sql, conexion)
+                {
+                    CommandType = CommandType.Text,
+                };
+                conexion.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    var usuario = new Usuario()
+                    {
+                        UsuarioId = sdr.GetInt32(0),
+                        NombreUsuario = sdr.GetString(1),
+                        NombreCompleto = sdr.GetString(2),
+                        Password = sdr.GetString(3),
+                        TipoUsuarioId = sdr.GetInt32(0)
+                    };
+                    lista.Add(usuario);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                conexion.Close();
+            }
+            return lista;
+        }
     }
 }

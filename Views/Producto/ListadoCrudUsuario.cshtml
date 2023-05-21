@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Proyecto_DSWI.Models.Usuario>
+
+@{
+    ViewBag.Title = "ListadoCrudUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListadoCrudUsuario</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NombreCompleto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NombreUsuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoUsuarioId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NombreCompleto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NombreUsuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoUsuarioId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UsuarioId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UsuarioId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UsuarioId })
+        </td>
+    </tr>
+}
+
+</table>

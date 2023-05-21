@@ -123,6 +123,7 @@
     <Compile Include="Controllers\CarritoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\SeguridadController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="DAO\ProductoDao.cs" />
     <Compile Include="DAO\UsuarioDao.cs" />
     <Compile Include="DAO\VentaDao.cs" />
@@ -219,6 +220,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\Producto.js" />
     <Content Include="Scripts\src\index.js" />
     <Content Include="Scripts\src\methods\defaults.js" />
     <Content Include="Scripts\src\methods\destroy.js" />
@@ -320,9 +322,12 @@
     <Content Include="Views\Producto\Edit.cshtml" />
     <Content Include="Views\Producto\Details.cshtml" />
     <Content Include="Views\Producto\Delete.cshtml" />
+    <Content Include="Views\Venta\ListadoCRUDVenta.cshtml" />
+    <Content Include="Views\Producto\ListadoCrudUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
